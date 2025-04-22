@@ -1,55 +1,1040 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Firebase Push Notification</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Social Community App - Fixed</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(145deg, #1e1e2f 0%, #2c2c3d 100%);
+            color: #e0e0e0;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: rgba(30, 30, 46, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 15px 25px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar h5 {
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            background: linear-gradient(45deg, #6a0dad, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-tabs .nav-link {
+            color: #bbb;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .nav-tabs .nav-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(45deg, #6a0dad, #a855f7);
+            color: #fff;
+        }
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff5555, #ff7777);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+        .profile-icon:hover { transform: rotate(360deg); }
+        .search-bar {
+            position: relative;
+            width: 300px;
+        }
+        .search-bar input {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 40px 8px 15px;
+            color: #fff;
+            font-size: 14px;
+            width: 100%;
+        }
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #6a0dad;
+        }
+        .search-bar i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: rgba(40, 40, 46, 0.95);
+            border-radius: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+        .search-result-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .search-result-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .post {
+            background: rgba(40, 40, 46, 0.9);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+        .user-initial {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-right: 15px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.3);
+        }
+        .bg-gradient-success { background: linear-gradient(45deg, #28a745, #34d058); }
+        .username { font-weight: 600; color: #fff; }
+        .username:hover { color: #a855f7; }
+        .follow-btn {
+            color: #ff5555;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        .follow-btn:hover { background: rgba(255, 85, 85, 0.1); color: #ff7777; }
+        .follow-btn.followed { color: #28a745; background: rgba(40, 167, 69, 0.1); }
+        .post-type {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(106, 13, 173, 0.2);
+            color: #a855f7;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+        .post-actions {
+            display: flex;
+            gap: 25px;
+            margin-top: 15px;
+        }
+        .post-actions i {
+            color: #999;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .post-actions i:hover { color: #fff; transform: scale(1.15); }
+        .post-actions .liked { color: #ff5555; animation: heartBeat 0.5s ease; }
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        .comment-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+        .comment-section.active { display: block; }
+        .comment-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            color: #fff;
+            width: 100%;
+        }
+        .comment-input:focus { outline: none; box-shadow: 0 0 0 2px #6a0dad; }
+        .comment {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        .comment .comment-user { color: #a855f7; font-weight: 500; }
+        .post-btn {
+            background: linear-gradient(45deg, #6a0dad, #a855f7);
+            border: none;
+            padding: 15px 35px;
+            border-radius: 50px;
+            color: #fff;
+            font-weight: 600;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(106, 13, 173, 0.5);
+            transition: all 0.3s ease;
+        }
+        .post-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(106, 13, 173, 0.7);
+        }
+        .modal-content {
+            background: rgba(40, 40, 46, 0.95);
+            border: none;
+            border-radius: 20px;
+            color: #fff;
+        }
+        .modal-body input, .modal-body textarea, .modal-body select {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: #fff;
+            border-radius: 15px;
+            padding: 10px 15px;
+        }
+        .modal-body input:focus, .modal-body textarea:focus, .modal-body select:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #6a0dad;
+        }
+        .modal-footer .btn-primary {
+            background: linear-gradient(45deg, #6a0dad, #a855f7);
+            border: none;
+        }
+        .auth-btn {
+            background: linear-gradient(45deg, #4285f4, #34a853);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        .auth-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(66, 133, 244, 0.4);
+        }
+        .delete-btn {
+            color: #ff5555;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .delete-btn:hover { color: #ff7777; }
+        @media (max-width: 576px) {
+            .search-bar { width: 200px; }
+            .nav-tabs .nav-link { padding: 6px 15px; font-size: 13px; }
+            .post { padding: 15px; }
+            .user-initial { width: 40px; height: 40px; font-size: 18px; }
+            .post-btn { padding: 10px 20px; }
+        }
+    </style>
 </head>
 <body>
-  <h1>Push Notification Test</h1>
-  <button id="notifyBtn">Allow Notification</button>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <h5>Forum</h5>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search users or posts...">
+                <i class="bi bi-search"></i>
+                <div class="search-results" id="searchResults"></div>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-tab="all">All</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-tab="feed">Feed</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-tab="announcement">Announcement</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-tab="question">Question</a>
+                    </li>
+                </ul>
+                <button id="authButton" class="auth-btn">Sign In with Google</button>
+                <div id="profileIcon" class="profile-icon" style="display: none;" data-bs-toggle="modal" data-bs-target="#profileModal"></div>
+            </div>
+        </div>
+    </nav>
 
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging-compat.js"></script>
+    <!-- Posts Container -->
+    <div class="container mt-4" id="posts-container">
+        <!-- Posts will be dynamically loaded here -->
+    </div>
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBC07Wifgkr4Cpu2Wj06OmfqYqxnDXWGD4",
-      authDomain: "cricket-15dee.firebaseapp.com",
-      databaseURL: "https://cricket-15dee-default-rtdb.firebaseio.com",
-      projectId: "cricket-15dee",
-      storageBucket: "cricket-15dee.firebasestorage.app",
-      messagingSenderId: "739754695271",
-      appId: "1:739754695271:web:9b08ccac464ea754a792c2",
-      measurementId: "G-2G2113K5Q3"
-    };
+    <!-- Post Button -->
+    <button id="postButton" class="post-btn" style="display: none;" data-bs-toggle="modal" data-bs-target="#postModal">Post</button>
 
-    firebase.initializeApp(firebaseConfig);
-    const messaging = firebase.messaging();
+    <!-- Post Modal -->
+    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="postModalLabel">Create a Post</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <select id="postType" class="form-select mb-3">
+                        <option value="feed">Feed</option>
+                        <option value="announcement">Announcement</option>
+                        <option value="question">Question</option>
+                    </select>
+                    <textarea class="form-control" id="postContent" rows="6" placeholder="What's on your mind?"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="submitPost">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    document.getElementById("notifyBtn").addEventListener("click", async () => {
-      try {
-        const permission = await Notification.requestPermission();
-        if (permission === "granted") {
-          const token = await messaging.getToken({
-            vapidKey: "BAE2GcY_g7bLOw8hvdc2_iq8o63Ay0s6IM1nJyTfQaJMqwgFeRR3_t1uvs5r5vhbiRigUrsdr-50lyT7V8WYzxg"
-          });
-          alert("Token:\n" + token);
-          console.log("Token:", token);
-        } else {
-          alert("Permission not granted");
+    <!-- Profile Modal -->
+    <div class="modal fade profile-modal" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Profile</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="profilePhoto" class="rounded-circle mb-3" style="width: 100px; height: 100px;" alt="Profile Photo">
+                    <h5 id="profileName"></h5>
+                    <p id="profileEmail"></p>
+                    <input type="text" id="profileUsername" class="form-control mb-3" placeholder="Update username">
+                    <input type="text" id="profileBio" class="form-control mb-3" placeholder="Update bio">
+                    <button class="btn btn-primary mb-3" id="saveProfile">Save Profile</button>
+                    <button class="btn btn-primary" id="signOutButton">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Single Post Modal -->
+    <div class="modal fade" id="singlePostModal" tabindex="-1" aria-labelledby="singlePostModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="singlePostModalLabel">Post</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="singlePostContent">
+                    <!-- Post content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        // Import Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+        import { getDatabase, ref, push, onValue, set, remove, update } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDmJIWV2HSabLzgf7l6mJ4zdQaZVmckXdE",
+            authDomain: "social-community-de517.firebaseapp.com",
+            projectId: "social-community-de517",
+            storageBucket: "social-community-de517.firebasestorage.app",
+            messagingSenderId: "312580712536",
+            appId: "1:312580712536:web:97c72be99dfec888aa022d",
+            measurementId: "G-993HCEY87H"
+        };
+
+        // Initialize Firebase
+        let app, auth, db;
+        try {
+            app = initializeApp(firebaseConfig);
+            getAnalytics(app);
+            auth = getAuth(app);
+            db = getDatabase(app);
+            console.log("Firebase initialized successfully");
+        } catch (error) {
+            console.error("Firebase initialization failed:", error);
+            alert("Failed to initialize Firebase. Check console for details.");
         }
-      } catch (err) {
-        console.error("Error getting token", err);
-      }
-    });
 
-    messaging.onMessage((payload) => {
-      console.log("Message received. ", payload);
-      new Notification(payload.notification.title, {
-        body: payload.notification.body,
-        icon: payload.notification.icon
-      });
-    });
-  </script>
+        const provider = new GoogleAuthProvider();
+
+        // DOM Elements
+        const authButton = document.getElementById('authButton');
+        const profileIcon = document.getElementById('profileIcon');
+        const postButton = document.getElementById('postButton');
+        const postsContainer = document.getElementById('posts-container');
+        const submitPost = document.getElementById('submitPost');
+        const postContent = document.getElementById('postContent');
+        const postType = document.getElementById('postType');
+        const profilePhoto = document.getElementById('profilePhoto');
+        const profileName = document.getElementById('profileName');
+        const profileEmail = document.getElementById('profileEmail');
+        const profileUsername = document.getElementById('profileUsername');
+        const profileBio = document.getElementById('profileBio');
+        const saveProfile = document.getElementById('saveProfile');
+        const signOutButton = document.getElementById('signOutButton');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const singlePostModal = new bootstrap.Modal(document.getElementById('singlePostModal'));
+
+        // Authentication State Listener
+        let currentUser = null;
+        let following = [];
+        let allPosts = [];
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                authButton.style.display = 'none';
+                profileIcon.style.display = 'flex';
+                postButton.style.display = 'block';
+                profileIcon.textContent = user.displayName.charAt(0).toUpperCase();
+                profilePhoto.src = user.photoURL || 'https://via.placeholder.com/100';
+                profileName.textContent = user.displayName;
+                profileEmail.textContent = user.email;
+                console.log("User signed in:", user.uid);
+                loadUserProfile(user.uid);
+                loadPosts();
+                checkSharedPost();
+            } else {
+                currentUser = null;
+                authButton.style.display = 'block';
+                profileIcon.style.display = 'none';
+                postButton.style.display = 'none';
+                postsContainer.innerHTML = '<p class="text-center">Please sign in to view posts.</p>';
+                console.log("User signed out");
+            }
+        });
+
+        // Sign In with Google
+        authButton.addEventListener('click', () => {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    const userRef = ref(db, `users/${user.uid}`);
+                    set(userRef, {
+                        username: user.displayName,
+                        email: user.email,
+                        photoURL: user.photoURL || '',
+                        bio: '',
+                        createdAt: Date.now(),
+                        following: []
+                    }).then(() => {
+                        console.log("User profile created in database");
+                    }).catch((error) => {
+                        console.error("Error creating user profile:", error);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Sign-in error:", error);
+                    alert("Error signing in: " + error.message);
+                });
+        });
+
+        // Sign Out
+        signOutButton.addEventListener('click', () => {
+            signOut(auth)
+                .then(() => {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('profileModal'));
+                    modal.hide();
+                })
+                .catch((error) => {
+                    console.error("Sign-out error:", error);
+                });
+        });
+
+        // Load User Profile
+        function loadUserProfile(userId) {
+            const userRef = ref(db, `users/${userId}`);
+            onValue(userRef, (snapshot) => {
+                const userData = snapshot.val();
+                if (userData) {
+                    profileUsername.value = userData.username || currentUser.displayName;
+                    profileBio.value = userData.bio || '';
+                    following = userData.following || [];
+                    console.log("User profile loaded:", userData);
+                } else {
+                    console.warn("No user data found for userId:", userId);
+                }
+            }, (error) => {
+                console.error("Error loading user profile:", error);
+            });
+        }
+
+        // Save Profile
+        saveProfile.addEventListener('click', () => {
+            const newUsername = profileUsername.value.trim();
+            const newBio = profileBio.value.trim();
+            if (!newUsername) {
+                alert('Username cannot be empty!');
+                return;
+            }
+
+            const userRef = ref(db, `users/${currentUser.uid}`);
+            update(userRef, {
+                username: newUsername,
+                bio: newBio
+            })
+                .then(() => {
+                    profileName.textContent = newUsername;
+                    alert('Profile updated successfully!');
+                    console.log("Profile updated:", { username: newUsername, bio: newBio });
+                })
+                .catch((error) => {
+                    console.error("Error updating profile:", error);
+                    alert("Error updating profile: " + error.message);
+                });
+        });
+
+        // Create a New Post
+        submitPost.addEventListener('click', () => {
+            const content = postContent.value.trim();
+            const type = postType.value;
+            if (!content) {
+                alert('Please enter some content for your post!');
+                return;
+            }
+            if (!currentUser) {
+                alert('You must be signed in to post!');
+                return;
+            }
+
+            const postsRef = ref(db, 'posts');
+            const newPostRef = push(postsRef);
+            const postData = {
+                userId: currentUser.uid,
+                username: profileUsername.value || currentUser.displayName,
+                userPhoto: currentUser.photoURL || '',
+                content: content,
+                type: type,
+                timestamp: Date.now(),
+                likes: 0,
+                comments: {}
+            };
+
+            set(newPostRef, postData)
+                .then(() => {
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('postModal'));
+                    modal.hide();
+                    postContent.value = '';
+                    console.log("Post created successfully:", postData);
+                })
+                .catch((error) => {
+                    console.error("Error creating post:", error);
+                    alert("Error creating post: " + error.message);
+                });
+        });
+
+        // Load Posts from Firebase
+        function loadPosts(filterType = 'all') {
+            const postsRef = ref(db, 'posts');
+            onValue(postsRef, (snapshot) => {
+                postsContainer.innerHTML = '';
+                allPosts = [];
+                snapshot.forEach((childSnapshot) => {
+                    const post = childSnapshot.val();
+                    post.id = childSnapshot.key;
+                    allPosts.push(post);
+                });
+
+                allPosts.sort((a, b) => b.timestamp - a.timestamp);
+
+                allPosts.forEach((post) => {
+                    if (filterType === 'all' || post.type === filterType) {
+                        const postElement = createPostElement(post);
+                        postsContainer.appendChild(postElement);
+                    }
+                });
+                console.log("Posts loaded:", allPosts.length);
+            }, (error) => {
+                console.error("Error loading posts:", error);
+                postsContainer.innerHTML = '<p class="text-center">Error loading posts. Check console for details.</p>';
+            });
+        }
+
+        // Create Post Element
+        function createPostElement(post) {
+            const postDiv = document.createElement('div');
+            postDiv.classList.add('post');
+            postDiv.setAttribute('data-id', post.id);
+
+            const timeAgo = formatTimeAgo(post.timestamp);
+            const initial = post.username.charAt(0).toUpperCase();
+            const commentCount = post.comments ? Object.keys(post.comments).length : 0;
+            const isOwnPost = currentUser && post.userId === currentUser.uid;
+            const isFollowing = following.includes(post.userId);
+
+            postDiv.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <div class="user-initial bg-gradient-success">${initial}</div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <a href="#" class="username">${post.username}</a>
+                                <span class="time-ago">${timeAgo}</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                ${isOwnPost ? `<i class="bi bi-trash delete-btn"></i>` : ''}
+                                <a href="#" class="follow-btn ${isFollowing ? 'followed' : ''}">${isFollowing ? 'UNFOLLOW' : 'FOLLOW'}</a>
+                            </div>
+                        </div>
+                        <div class="post-content mt-3">
+                            <p>${post.content}</p>
+                        </div>
+                        <div class="post-actions">
+                            <span class="like-btn"><i class="bi bi-heart ${post.likedBy && post.likedBy[currentUser?.uid] ? 'liked' : ''}"></i> <span class="like-count">${post.likes || 0}</span></span>
+                            <span class="comment-btn"><i class="bi bi-chat"></i> <span class="comment-count">${commentCount}</span></span>
+                            <span class="share-btn"><i class="bi bi-share"></i></span>
+                        </div>
+                        <div class="comment-section">
+                            <div class="mb-3">
+                                <input type="text" class="comment-input" placeholder="Write a comment...">
+                            </div>
+                            <div class="comments-list"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-type">${post.type.charAt(0).toUpperCase() + post.type.slice(1)}</div>
+            `;
+
+            // Load comments
+            if (post.comments) {
+                const commentsList = postDiv.querySelector('.comments-list');
+                Object.values(post.comments).forEach((comment) => {
+                    const commentElement = document.createElement('div');
+                    commentElement.classList.add('comment');
+                    commentElement.innerHTML = `
+                        <span class="comment-user">${comment.username}</span>
+                        <span>: ${comment.content}</span>
+                    `;
+                    commentsList.appendChild(commentElement);
+                });
+            }
+
+            // Attach event listeners
+            attachPostEventListeners(postDiv);
+            return postDiv;
+        }
+
+        // Attach Event Listeners to Post
+        function attachPostEventListeners(post) {
+            const postId = post.getAttribute('data-id');
+            const postData = allPosts.find(p => p.id === postId);
+
+            // Follow button
+            const followBtn = post.querySelector('.follow-btn');
+            followBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!currentUser) {
+                    alert('Please sign in to follow users!');
+                    return;
+                }
+                const userToFollow = postData.userId;
+
+                if (following.includes(userToFollow)) {
+                    following = following.filter(id => id !== userToFollow);
+                    followBtn.textContent = 'FOLLOW';
+                    followBtn.classList.remove('followed');
+                } else {
+                    following.push(userToFollow);
+                    followBtn.textContent = 'UNFOLLOW';
+                    followBtn.classList.add('followed');
+                }
+
+                const userRef = ref(db, `users/${currentUser.uid}`);
+                update(userRef, { following })
+                    .then(() => console.log("Following updated:", following))
+                    .catch((error) => console.error("Error updating following:", error));
+            });
+
+            // Like button
+            const likeBtn = post.querySelector('.like-btn');
+            likeBtn.addEventListener('click', () => {
+                if (!currentUser) {
+                    alert('Please sign in to like posts!');
+                    return;
+                }
+                const likeCountSpan = likeBtn.querySelector('.like-count');
+                let likes = parseInt(likeCountSpan.textContent);
+                const icon = likeBtn.querySelector('i');
+                const isLiked = icon.classList.contains('liked');
+
+                likes = isLiked ? likes - 1 : likes + 1;
+                icon.classList.toggle('liked');
+                likeCountSpan.textContent = likes;
+
+                const postRef = ref(db, `posts/${postId}`);
+                const likedBy = postData.likedBy || {};
+                if (isLiked) {
+                    delete likedBy[currentUser.uid];
+                } else {
+                    likedBy[currentUser.uid] = true;
+                }
+                update(postRef, { likes, likedBy })
+                    .then(() => console.log("Likes updated:", likes))
+                    .catch((error) => console.error("Error updating likes:", error));
+            });
+
+            // Comment button
+            const commentBtn = post.querySelector('.comment-btn');
+            commentBtn.addEventListener('click', () => {
+                const commentSection = post.querySelector('.comment-section');
+                commentSection.classList.toggle('active');
+                if (commentSection.classList.contains('active')) {
+                    commentSection.querySelector('.comment-input').focus();
+                }
+            });
+
+            // Comment input
+            const commentInput = post.querySelector('.comment-input');
+            commentInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && commentInput.value.trim()) {
+                    if (!currentUser) {
+                        alert('Please sign in to comment!');
+                        return;
+                    }
+                    const commentsRef = ref(db, `posts/${postId}/comments`);
+                    const newCommentRef = push(commentsRef);
+                    const commentData = {
+                        username: profileUsername.value || currentUser.displayName,
+                        content: commentInput.value.trim(),
+                        timestamp: Date.now()
+                    };
+
+                    set(newCommentRef, commentData)
+                        .then(() => {
+                            commentInput.value = '';
+                            console.log("Comment added:", commentData);
+                        })
+                        .catch((error) => {
+                            console.error("Error adding comment:", error);
+                            alert("Error adding comment: " + error.message);
+                        });
+                }
+            });
+
+            // Share button
+            const shareBtn = post.querySelector('.share-btn');
+            shareBtn.addEventListener('click', () => {
+                const shareUrl = `${window.location.origin}${window.location.pathname}?post=${postId}`;
+                navigator.clipboard.writeText(shareUrl);
+                alert('Share link copied to clipboard!');
+            });
+
+            // Delete button
+            const deleteBtn = post.querySelector('.delete-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', () => {
+                    if (confirm('Are you sure you want to delete this post?')) {
+                        const postRef = ref(db, `posts/${postId}`);
+                        remove(postRef)
+                            .then(() => console.log("Post deleted:", postId))
+                            .catch((error) => console.error("Error deleting post:", error));
+                    }
+                });
+            }
+        }
+
+        // Format Time Ago
+        function formatTimeAgo(timestamp) {
+            const now = Date.now();
+            const seconds = Math.floor((now - timestamp) / 1000);
+            if (seconds < 60) return `${seconds} seconds ago`;
+            const minutes = Math.floor(seconds / 60);
+            if (minutes < 60) return `${minutes} minutes ago`;
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return `${hours} hours ago`;
+            const days = Math.floor(hours / 24);
+            return `${days} days ago`;
+        }
+
+        // Tab Filtering
+        document.querySelectorAll('.nav-link').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.nav-link').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const filterType = tab.getAttribute('data-tab');
+                loadPosts(filterType);
+            });
+        });
+
+        // Search Functionality
+        searchInput.addEventListener('input', () => {
+            const queryText = searchInput.value.trim().toLowerCase();
+            searchResults.innerHTML = '';
+            searchResults.style.display = queryText ? 'block' : 'none';
+
+            if (!queryText) return;
+
+            // Search users
+            const usersRef = ref(db, 'users');
+            onValue(usersRef, (snapshot) => {
+                const users = [];
+                snapshot.forEach((childSnapshot) => {
+                    const user = childSnapshot.val();
+                    user.id = childSnapshot.key;
+                    if (user.username.toLowerCase().includes(queryText)) {
+                        users.push(user);
+                    }
+                });
+
+                users.forEach(user => {
+                    const resultItem = document.createElement('div');
+                    resultItem.classList.add('search-result-item');
+                    resultItem.textContent = `User: ${user.username}`;
+                    resultItem.addEventListener('click', () => {
+                        postsContainer.innerHTML = '';
+                        const userPosts = allPosts.filter(post => post.userId === user.id);
+                        userPosts.forEach(post => {
+                            const postElement = createPostElement(post);
+                            postsContainer.appendChild(postElement);
+                        });
+                        searchResults.style.display = 'none';
+                        searchInput.value = '';
+                    });
+                    searchResults.appendChild(resultItem);
+                });
+            }, { onlyOnce: true }, (error) => {
+                console.error("Error searching users:", error);
+            });
+
+            // Search posts
+            const matchingPosts = allPosts.filter(post => post.content.toLowerCase().includes(queryText));
+            matchingPosts.forEach(post => {
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('search-result-item');
+                resultItem.textContent = `Post: ${post.content.substring(0, 50)}...`;
+                resultItem.addEventListener('click', () => {
+                    showSinglePost(post);
+                    searchResults.style.display = 'none';
+                    searchInput.value = '';
+                });
+                searchResults.appendChild(resultItem);
+            });
+        });
+
+        // Hide search results when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Check for shared post in URL
+        function checkSharedPost() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = urlParams.get('post');
+            if (postId) {
+                const post = allPosts.find(p => p.id === postId);
+                if (post) {
+                    showSinglePost(post);
+                } else {
+                    console.warn("Shared post not found:", postId);
+                }
+            }
+        }
+
+        // Show Single Post in Modal
+        function showSinglePost(post) {
+            const singlePostContent = document.getElementById('singlePostContent');
+            const timeAgo = formatTimeAgo(post.timestamp);
+            const initial = post.username.charAt(0).toUpperCase();
+            const commentCount = post.comments ? Object.keys(post.comments).length : 0;
+            const isOwnPost = currentUser && post.userId === currentUser.uid;
+            const isFollowing = following.includes(post.userId);
+
+            singlePostContent.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <div class="user-initial bg-gradient-success">${initial}</div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <a href="#" class="username">${post.username}</a>
+                                <span class="time-ago">${timeAgo}</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                ${isOwnPost ? `<i class="bi bi-trash delete-btn"></i>` : ''}
+                                <a href="#" class="follow-btn ${isFollowing ? 'followed' : ''}">${isFollowing ? 'UNFOLLOW' : 'FOLLOW'}</a>
+                            </div>
+                        </div>
+                        <div class="post-content mt-3">
+                            <p>${post.content}</p>
+                        </div>
+                        <div class="post-actions mt-3">
+                            <span class="like-btn"><i class="bi bi-heart ${post.likedBy && post.likedBy[currentUser?.uid] ? 'liked' : ''}"></i> <span class="like-count">${post.likes || 0}</span></span>
+                            <span class="comment-btn"><i class="bi bi-chat"></i> <span class="comment-count">${commentCount}</span></span>
+                        </div>
+                        <div class="comment-section mt-3">
+                            <div class="mb-3">
+                                <input type="text" class="comment-input" placeholder="Write a comment...">
+                            </div>
+                            <div class="comments-list"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-type">${post.type.charAt(0).toUpperCase() + post.type.slice(1)}</div>
+            `;
+
+            // Load comments
+            if (post.comments) {
+                const commentsList = singlePostContent.querySelector('.comments-list');
+                Object.values(post.comments).forEach((comment) => {
+                    const commentElement = document.createElement('div');
+                    commentElement.classList.add('comment');
+                    commentElement.innerHTML = `
+                        <span class="comment-user">${comment.username}</span>
+                        <span>: ${comment.content}</span>
+                    `;
+                    commentsList.appendChild(commentElement);
+                });
+            }
+
+            // Attach event listeners to modal post
+            const modalPost = singlePostContent.parentElement;
+            modalPost.querySelector('.follow-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!currentUser) {
+                    alert('Please sign in to follow users!');
+                    return;
+                }
+                const userToFollow = post.userId;
+
+                if (following.includes(userToFollow)) {
+                    following = following.filter(id => id !== userToFollow);
+                    e.target.textContent = 'FOLLOW';
+                    e.target.classList.remove('followed');
+                } else {
+                    following.push(userToFollow);
+                    e.target.textContent = 'UNFOLLOW';
+                    e.target.classList.add('followed');
+                }
+
+                const userRef = ref(db, `users/${currentUser.uid}`);
+                update(userRef, { following })
+                    .then(() => console.log("Following updated in modal:", following))
+                    .catch((error) => console.error("Error updating following in modal:", error));
+            });
+
+            modalPost.querySelector('.like-btn').addEventListener('click', () => {
+                if (!currentUser) {
+                    alert('Please sign in to like posts!');
+                    return;
+                }
+                const likeCountSpan = modalPost.querySelector('.like-count');
+                let likes = parseInt(likeCountSpan.textContent);
+                const icon = modalPost.querySelector('i');
+                const isLiked = icon.classList.contains('liked');
+
+                likes = isLiked ? likes - 1 : likes + 1;
+                icon.classList.toggle('liked');
+                likeCountSpan.textContent = likes;
+
+                const postRef = ref(db, `posts/${post.id}`);
+                const likedBy = post.likedBy || {};
+                if (isLiked) {
+                    delete likedBy[currentUser.uid];
+                } else {
+                    likedBy[currentUser.uid] = true;
+                }
+                update(postRef, { likes, likedBy })
+                    .then(() => console.log("Likes updated in modal:", likes))
+                    .catch((error) => console.error("Error updating likes in modal:", error));
+            });
+
+            modalPost.querySelector('.comment-btn').addEventListener('click', () => {
+                const commentSection = modalPost.querySelector('.comment-section');
+                commentSection.classList.toggle('active');
+                if (commentSection.classList.contains('active')) {
+                    commentSection.querySelector('.comment-input').focus();
+                }
+            });
+
+            modalPost.querySelector('.comment-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && e.target.value.trim()) {
+                    if (!currentUser) {
+                        alert('Please sign in to comment!');
+                        return;
+                    }
+                    const commentsRef = ref(db, `posts/${post.id}/comments`);
+                    const newCommentRef = push(commentsRef);
+                    const commentData = {
+                        username: profileUsername.value || currentUser.displayName,
+                        content: e.target.value.trim(),
+                        timestamp: Date.now()
+                    };
+
+                    set(newCommentRef, commentData)
+                        .then(() => {
+                            e.target.value = '';
+                            console.log("Comment added in modal:", commentData);
+                        })
+                        .catch((error) => {
+                            console.error("Error adding comment in modal:", error);
+                        });
+                }
+            });
+
+            const deleteBtn = modalPost.querySelector('.delete-btn');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', () => {
+                    if (confirm('Are you sure you want to delete this post?')) {
+                        const postRef = ref(db, `posts/${post.id}`);
+                        remove(postRef)
+                            .then(() => {
+                                singlePostModal.hide();
+                                console.log("Post deleted from modal:", post.id);
+                            })
+                            .catch((error) => console.error("Error deleting post from modal:", error));
+                    }
+                });
+            }
+
+            singlePostModal.show();
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
