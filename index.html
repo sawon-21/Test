@@ -184,8 +184,7 @@
             pointer-events: none;
         }
         #bld {
-            background: red;
-            color: var(--primary);
+            background: darkred;
             border: none;
             padding: 0.5rem;
             border-radius: 20px;
@@ -307,16 +306,17 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: brown;
+            background: darkred;
             color: white;
-            width: 30px;
+            width: 42px;
             height: 30px;
-            border-radius: 50%;
+            gap: 0.2rem;
+            border-radius: 40%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .auth-btn {
@@ -767,7 +767,7 @@
                             </div>
                             
                             <div class="col-md-6 mb-3">
-                                <label class="form-label" for="profileCurrentUniversity"><i class="fas fa-graduation-cap"></i> Current University</label>
+                                <label class="form-label" for="profileCurrentUniversity"><i class="fas fa-graduation-cap"></i> Current University Name [Capital Letters and Full Forms]</label>
                                 <input class="form-control" id="profileCurrentUniversity" type="text" required>
                             </div>
                         </div>
@@ -778,7 +778,7 @@
                         </div>
                         
                         <div class="mb-3">
-                            <label class="form-label" for="profileQualifiedUniversities"><i class="fas fa-university"></i> Qualified Universities (comma separated)</label>
+                            <label class="form-label" for="profileQualifiedUniversities"><i class="fas fa-university"></i> List of Qualified Universities (Comma Separated) [Capital Letters and Short Forms]</label>
                             <input class="form-control" id="profileQualifiedUniversities" type="text" placeholder="BUET, DU, CUET" required>
                         </div>
 
@@ -805,7 +805,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label class="form-label" for="profileFacebook"><i class="fab fa-facebook"></i> Facebook Profile URL (optional)</label>
                             <input class="form-control" id="profileFacebook" type="url" placeholder="https://facebook.com/username">
@@ -1068,7 +1068,7 @@
                     transformation = `e_blur:1000/`;
                 }
 
-                transformation += `l_${watermarkPublicId},w_200,o_50,g_south,fl_relative/fl_layer_apply`;
+                transformation += `l_${watermarkPublicId},w_200,o_70,g_south,fl_relative/fl_layer_apply`;
                 return `https://res.cloudinary.com/${cloudName}/image/upload/${transformation}/${publicId}.jpg`.replace(/\s+/g, '');
             } catch (err) {
                 console.error("Image upload failed:", err);
@@ -1248,7 +1248,7 @@
                 
                 memberCard.innerHTML = `
                     <div class="card-body">
-                        ${member.bloodGroup ? `<div class="blood-group">${member.bloodGroup}</div>` : ''}
+                        ${member.bloodGroup ? `<div class="blood-group"><i class="fas fa-tint"></i>  ${member.bloodGroup} </div>` : ''}
                         <img src="${member.profilePicture || 'https://i.postimg.cc/sxQ8JrRs/avatar-profile-picture-icon-logo-design-vector-28836260.jpg'}" 
                              alt="${member.username}'s profile" 
                              class="${blurClass}">
