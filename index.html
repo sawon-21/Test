@@ -85,7 +85,6 @@
             max-width: 1400px;
         }
 
-        /* Header Styles */
         .header {
             position: relative;
             padding: 1rem;
@@ -143,7 +142,6 @@
             border-radius: 3px;
         }
 
-        /* Search and Filter Section */
         .search-filter-section {
             background: var(--light-blue);
             padding: 0.5rem;
@@ -219,7 +217,6 @@
             font-weight: 800;
         }
 
-        /* Member Cards */
         .members-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -310,7 +307,6 @@
             font-size: 1rem;
         }
 
-        /* Auth Button */
         .auth-btn {
             position: fixed;
             top: 20px;
@@ -340,8 +336,6 @@
         .auth-btn i {
             font-size: 1.1rem;
         }
-
-        /* Member Counter */
         .member-counter {
             position: fixed;
             top: 20px;
@@ -393,7 +387,6 @@
             padding: 0.5rem;
         }
 
-        /* Buttons */
         .btn-primary {
             background: var(--primary);
             color: var(--dark-blue);
@@ -427,7 +420,6 @@
             transform: translateY(-2px);
         }
 
-        /* Forms */
         .form-control, .form-select {
             background: var(--lighter-blue);
             border: 2px solid var(--lighter-blue);
@@ -451,7 +443,6 @@
             font-size: 0.95rem;
         }
 
-        /* Profile Image Upload */
         .profile-image-upload {
             position: relative;
             width: 200px;
@@ -494,7 +485,6 @@
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* Loading Overlay */
         #loadingOverlay {
             position: fixed;
             top: 0;
@@ -528,7 +518,6 @@
             letter-spacing: 1px;
         }
 
-        /* Responsive Adjustments */
         @media (max-width: 768px) {
             .members-grid {
                 grid-template-columns: 1fr;
@@ -552,7 +541,6 @@
             }
         }
 
-        /* Animations */
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -563,7 +551,6 @@
             animation: float 6s ease-in-out infinite;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -581,7 +568,6 @@
             background: var(--primary-dark);
         }
 
-        /* Particle Background */
         .particles {
             position: fixed;
             top: 0;
@@ -602,36 +588,23 @@
 </head>
 
 <body>
-    <!-- Loading Overlay -->
     <div id="loadingOverlay" class="animate__animated animate__fadeIn">
         <div class="loader"></div>
         <div class="loading-text">Loading DGCCian PRIDE...</div>
     </div>
-
-    <!-- Particle Background -->
     <div class="particles" id="particles"></div>
-
-    <!-- Header Section -->
     <header class="header floating">
         <div class="container text-center">
             <!-- Member Counter -->
             <div class="member-counter" id="memberCounter">
                 <i class="fas fa-users"></i> <span id="memberCount">0</span>
             </div>
-            
-            <!-- Auth Button -->
             <button class="auth-btn" id="authButton">
                 <i class="fas fa-sign-in-alt"></i> Sign In
             </button>
-            
-            <!-- clg Logo -->
             <img alt="clg Logo" class="clg-logo animate__animated animate__bounceIn" src="https://i.postimg.cc/q7d8ybfT/FB-IMG-1742751213665.jpg">
-            
-            <!-- clg Name -->
             <h3 class="display-4 animate__animated animate__fadeInDown">DGCCian PRIDE <i class="fas fa-heart"></i></h3>
             <h5 class="animate__animated animate__fadeIn animate__delay-1s">HSC - 2024</h5>
-            
-            <!-- clg Tagline -->
             <p class="tagline animate__animated animate__fadeIn animate__delay-1s">🧪 You're a beta tester</p>
             <small class="animate__animated animate__fadeIn animate__delay-1s">
                 <a href="https://www.instagram.com/mehedi_al_hasan_sawon_21?igsh=MXQ4cW1vYzE5aDgy" style="color: var(--text-light);">
@@ -640,18 +613,13 @@
             </small>
         </div>
     </header>
-
-    <!-- Main Content -->
     <main class="container">
-        <!-- Search and Filter Section -->
         <section class="search-filter-section animate__animated animate__fadeIn animate__delay-1s">
             <!-- Search Box -->
             <div class="search-box">
                 <input class="form-control" id="searchInput" placeholder="Search by name, university, blood group..." type="text">
                 <i class="fas fa-search"></i>
             </div>
-            
-            <!-- Quick Filter Buttons -->
             <div class="quick-filter-buttons mt-3">
                 <button class="quick-filter-btn active" data-filter="All">
                     <i class="fas fa-users"></i> All <span id="allCount">(0)</span>
@@ -666,10 +634,8 @@
                     <i class="fas fa-university"></i> University <span id="universityCount">(0)</span>
                 </button>
             </div>
-            
-            <!-- Blood Group Filters -->
             <div class="quick-filter-buttons mt-2">
-                <span class="text-muted" style=" font-size: 0.9rem; margin-right: 0.5rem;"><mark>Blood Group:</mark></span>
+                <span class="text" style="color: red; font-weight: 600;font-size: 0.9rem; margin-right: 0.5rem;"><i class="fas fa-tint"></i> Blood Group:</span>
                 <button class="quick-filter-btn blood-filter" data-blood="A+">A+</button>
                 <button class="quick-filter-btn blood-filter" data-blood="A-">A-</button>
                 <button class="quick-filter-btn blood-filter" data-blood="B+">B+</button>
@@ -680,8 +646,6 @@
                 <button class="quick-filter-btn blood-filter" data-blood="O-">O-</button>
             </div>
           <hr>  
-
-        <!-- Members Grid -->
         <div class="members-grid" id="membersGrid"></div>
         
         <!-- No Results Message -->
@@ -691,8 +655,6 @@
             <p class="text-muted">Try adjusting your search or filters</p>
         </div>
     </main>
-
-    <!-- Member Details Modal -->
     <div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -708,7 +670,7 @@
                     <h3 id="modalName" style="color: var(--primary); margin-bottom: 0.5rem;"></h3>
                     <div class="d-flex justify-content-center gap-2 mb-3">
                         <span class="badge bg-primary" id="modalGenderBadge"></span>
-                        <span class="badge bg-danger" id="modalBloodBadge"></span>
+                       <i class="fas fa-tint"></i> <span class="badge bg-danger" id="modalBloodBadge"></span>
                     </div>
                     
                     <div class="member-details">
@@ -740,8 +702,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Profile Modal -->
     <div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -759,7 +719,7 @@
                                 </div>
                                 <input type="file" id="profileImageInput" accept="image/*" style="display: none;">
                             </div>
-                            <small class="text-muted" style="color: var(--text-gray);">Click to upload profile picture</small>
+                            <small class="text" style="color: var(--text-gray);">Click to upload profile picture</small>
                         </div>
                         
                         <div class="row">
@@ -845,13 +805,10 @@
             </div>
         </div>
     </div>
-
-    <!-- Firebase, Bootstrap, and other JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script type="module">
-        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyA3eq7s6UvWPxlT05fXXesVpeSh1KnURyA",
             authDomain: "ssc22-4f7ae.firebaseapp.com",
@@ -862,8 +819,6 @@
             appId: "1:355526890032:web:6a19c027f419f54d75d3f5",
             measurementId: "G-GMHS7794LY"
         };
-
-        // Initialize Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getDatabase, ref, set, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
@@ -872,13 +827,9 @@
         const auth = getAuth(app);
         const database = getDatabase(app);
         const membersRef = ref(database, 'members');
-
-        // Cloudinary configuration
         const cloudName = "dvhsit2uy";
         const uploadPreset = "Chating app";
         const watermarkPublicId = "Remove_background_project_3_brxjuo";
-
-        // State variables
         let currentUser = null;
         let allMembers = {};
         let activeFilter = "All";
@@ -886,8 +837,6 @@
         let activeUniFilter = null;
         let searchQuery = "";
         let profileImageFile = null;
-
-        // DOM elements
         const authButton = document.getElementById('authButton');
         const memberCounter = document.getElementById('memberCounter');
         const memberCount = document.getElementById('memberCount');
@@ -907,32 +856,22 @@
         const profileSubmitBtn = document.getElementById('profileSubmitBtn');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const particlesContainer = document.getElementById('particles');
-
-        // Initialize the app
         function init() {
             createParticles();
             setupEventListeners();
             setupAuthStateListener();
             loadMembers();
         }
-
-        // Create animated particles
         function createParticles() {
             const particleCount = 30;
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
-                
-                // Random size between 1px and 3px
                 const size = Math.random() * 2 + 1;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
-                
-                // Random position
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
-                
-                // Random animation
                 const duration = Math.random() * 20 + 10;
                 const delay = Math.random() * 5;
                 particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
@@ -940,19 +879,13 @@
                 particlesContainer.appendChild(particle);
             }
         }
-
-        // Set up event listeners
         function setupEventListeners() {
             // Auth button
             authButton.addEventListener('click', handleAuthClick);
-            
-            // Search input with debounce
             searchInput.addEventListener('input', _.debounce(() => {
                 searchQuery = searchInput.value.toLowerCase();
                 filterAndRenderMembers();
             }, 300));
-            
-            // Filter buttons
             filterButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     activeFilter = btn.dataset.filter;
@@ -960,8 +893,6 @@
                     filterAndRenderMembers();
                 });
             });
-            
-            // Blood group filters
             bloodFilters.forEach(btn => {
                 btn.addEventListener('click', () => {
                     if (activeBloodFilter === btn.dataset.blood) {
@@ -973,8 +904,6 @@
                     filterAndRenderMembers();
                 });
             });
-            
-            // University filters
             uniFilters.forEach(btn => {
                 btn.addEventListener('click', () => {
                     if (activeUniFilter === btn.dataset.uni) {
@@ -986,33 +915,20 @@
                     filterAndRenderMembers();
                 });
             });
-            
-            // Profile image upload
             profileImageInput.addEventListener('change', previewProfileImage);
-            
-            // Profile form submission
             profileForm.addEventListener('submit', saveProfile);
         }
-
-        // Update active filter buttons
         function updateActiveFilters() {
-            // Update category filter buttons
             filterButtons.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.filter === activeFilter);
             });
-            
-            // Update blood filter buttons
             bloodFilters.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.blood === activeBloodFilter);
             });
-            
-            // Update university filter buttons
             uniFilters.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.uni === activeUniFilter);
             });
         }
-
-        // Handle auth button click
         function handleAuthClick() {
             if (currentUser) {
                 showProfileModal();
@@ -1020,8 +936,6 @@
                 signInWithGoogle();
             }
         }
-
-        // Google Sign-In
         async function signInWithGoogle() {
             const provider = new GoogleAuthProvider();
             try {
@@ -1031,21 +945,16 @@
                 alert("Sign-in failed. Please try again.");
             }
         }
-
-        // Set up auth state listener
         function setupAuthStateListener() {
             onAuthStateChanged(auth, (user) => {
                 currentUser = user;
                 updateAuthButton();
                 
                 if (user) {
-                    // Check if user has a profile
                     checkUserProfile();
                 }
             });
         }
-
-        // Update auth button based on auth state
         function updateAuthButton() {
             if (currentUser) {
                 authButton.innerHTML = '<i class="fas fa-user"></i> My Profile';
@@ -1053,8 +962,6 @@
                 authButton.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
             }
         }
-
-        // Check if user has a profile
         function checkUserProfile() {
             const userRef = ref(database, `members/${currentUser.uid}`);
             onValue(userRef, (snapshot) => {
@@ -1064,8 +971,6 @@
                 }
             }, { onlyOnce: true });
         }
-
-        // Show profile modal
         function showProfileModal() {
             if (!currentUser) {
                 alert("Please sign in to create or edit your profile.");
@@ -1073,20 +978,16 @@
             }
 
             const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
-            
-            // Reset form
             profileForm.reset();
             profileImagePreview.src = "https://i.postimg.cc/sxQ8JrRs/avatar-profile-picture-icon-logo-design-vector-28836260.jpg";
             profileImageFile = null;
-
-            // Load existing profile if available
             const userRef = ref(database, `members/${currentUser.uid}`);
             onValue(userRef, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
                     document.getElementById('profileName').value = data.username || '';
                     document.getElementById('profileGender').value = data.gender || 'Male';
-                    document.getElementById('profileBloodGroup').value = data.bloodGroup || 'A+';
+                    document.getElementById('profileBloodGroup').value = data.bloodGroup || '';
                     document.getElementById('profileCurrentUniversity').value = data.currentUniversity || '';
                     document.getElementById('profileSubject').value = data.subject || '';
                     document.getElementById('profileFacebook').value = data.facebook || '';
@@ -1100,7 +1001,6 @@
                     
                     if (data.profilePicture) {
                         profileImagePreview.src = data.profilePicture;
-                        // Apply blur if gender is female
                         if (data.gender === 'Female') {
                             profileImagePreview.classList.add('blur-image');
                         } else {
@@ -1108,15 +1008,12 @@
                         }
                     }
                 } else {
-                    // New user, set default name from Google account
                     document.getElementById('profileName').value = currentUser.displayName || '';
                 }
             }, { onlyOnce: true });
 
             profileModal.show();
         }
-
-        // Preview profile image
         function previewProfileImage() {
             const file = profileImageInput.files[0];
             if (file) {
@@ -1124,8 +1021,6 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     profileImagePreview.src = e.target.result;
-                    
-                    // Apply blur if gender is female
                     const gender = document.getElementById('profileGender').value;
                     if (gender === 'Female') {
                         profileImagePreview.classList.add('blur-image');
@@ -1136,8 +1031,6 @@
                 reader.readAsDataURL(file);
             }
         }
-
-        // Upload image to Cloudinary
         async function uploadProfileImage(file, gender) {
             const formData = new FormData();
             formData.append("file", file);
@@ -1161,15 +1054,13 @@
                     transformation = `e_blur:1000/`;
                 }
 
-                transformation += `l_${watermarkPublicId},w_200,o_70,g_south,fl_relative/fl_layer_apply`;
+                transformation += `l_${watermarkPublicId},w_200,o_50,g_south,fl_relative/fl_layer_apply`;
                 return `https://res.cloudinary.com/${cloudName}/image/upload/${transformation}/${publicId}.jpg`.replace(/\s+/g, '');
             } catch (err) {
                 console.error("Image upload failed:", err);
                 throw new Error("Failed to upload image. Please try again.");
             }
         }
-
-        // Save profile
         async function saveProfile(e) {
             e.preventDefault();
             
@@ -1197,8 +1088,6 @@
                 if (document.getElementById('categoryEngineering').checked) categories.push('Engineering');
                 if (document.getElementById('categoryMedical').checked) categories.push('Medical');
                 if (document.getElementById('categoryUniversity').checked) categories.push('University');
-
-                // Validate required fields
                 if (!username) throw new Error("Please enter your name");
                 if (!gender) throw new Error("Please select your gender");
                 if (!bloodGroup) throw new Error("Please select your blood group");
@@ -1208,8 +1097,6 @@
                 if (categories.length === 0) throw new Error("Please select at least one category");
 
                 let profilePictureUrl = '';
-                
-                // Upload new image if selected
                 if (profileImageFile) {
                     profilePictureUrl = await uploadProfileImage(profileImageFile, gender);
                 } else {
@@ -1221,8 +1108,6 @@
                         throw new Error("Please upload a profile picture");
                     }
                 }
-
-                // Prepare profile data
                 const profileData = {
                     username,
                     gender,
@@ -1236,25 +1121,16 @@
                     timestamp: Date.now(),
                     lastUpdated: Date.now()
                 };
-
-                // Add Facebook if provided
                 if (facebook) {
-                    // Validate Facebook URL
                     if (!facebook.startsWith('https://www.facebook.com/') && 
                         !facebook.startsWith('https://facebook.com/')) {
                         throw new Error("Please enter a valid Facebook URL starting with https://facebook.com/");
                     }
                     profileData.facebook = facebook;
                 }
-
-                // Save to Firebase
                 await set(ref(database, `members/${currentUser.uid}`), profileData);
-
-                // Close modal
                 const profileModal = bootstrap.Modal.getInstance(document.getElementById('profileModal'));
                 profileModal.hide();
-
-                // Show success message
                 showToast('Profile saved successfully!', 'success');
             } catch (error) {
                 console.error("Error saving profile:", error);
@@ -1264,10 +1140,7 @@
                 profileSubmitBtn.innerHTML = '<i class="fas fa-save"></i> Save Profile';
             }
         }
-
-        // Show toast notification
         function showToast(message, type = 'success') {
-            // Create toast element
             const toast = document.createElement('div');
             toast.className = `toast-notification ${type}`;
             toast.innerHTML = `
@@ -1277,31 +1150,21 @@
                 <div class="toast-message">${message}</div>
                 <div class="toast-close"><i class="fas fa-times"></i></div>
             `;
-            
-            // Add to body
             document.body.appendChild(toast);
-            
-            // Auto remove after 5 seconds
             setTimeout(() => {
                 toast.classList.add('fade-out');
                 setTimeout(() => toast.remove(), 300);
             }, 5000);
-            
-            // Close button
             toast.querySelector('.toast-close').addEventListener('click', () => {
                 toast.classList.add('fade-out');
                 setTimeout(() => toast.remove(), 300);
             });
         }
-
-        // Load members from Firebase
         function loadMembers() {
             onValue(membersRef, (snapshot) => {
                 allMembers = snapshot.val() || {};
                 updateMemberCounts();
                 filterAndRenderMembers();
-                
-                // Hide loading overlay with animation
                 setTimeout(() => {
                     loadingOverlay.classList.add('animate__fadeOut');
                     setTimeout(() => {
@@ -1316,8 +1179,6 @@
                 }, 500);
             });
         }
-
-        // Update member counts
         function updateMemberCounts() {
             const members = Object.values(allMembers);
             memberCount.textContent = members.length;
@@ -1331,24 +1192,18 @@
             medicalCount.textContent = `(${medical})`;
             universityCount.textContent = `(${university})`;
         }
-
-        // Filter and render members
         function filterAndRenderMembers() {
             const filteredMembers = Object.entries(allMembers)
                 .filter(([uid, member]) => {
-                    // Filter by category
                     const categoryMatch = activeFilter === "All" || 
                                          (member.categories && member.categories.includes(activeFilter));
-                    
-                    // Filter by blood group
+
                     const bloodMatch = !activeBloodFilter || 
                                       member.bloodGroup === activeBloodFilter;
                     
-                    // Filter by university
                     const uniMatch = !activeUniFilter || 
                                     (member.currentUniversity && member.currentUniversity.includes(activeUniFilter));
                     
-                    // Filter by search query
                     const searchMatch = !searchQuery || 
                                       (member.username && member.username.toLowerCase().includes(searchQuery)) || 
                                       (member.currentUniversity && member.currentUniversity.toLowerCase().includes(searchQuery)) || 
@@ -1361,8 +1216,6 @@
 
             renderMembers(filteredMembers);
         }
-
-        // Render members list
         function renderMembers(members) {
             if (members.length === 0) {
                 membersGrid.style.display = 'none';
@@ -1372,17 +1225,11 @@
             
             membersGrid.style.display = 'grid';
             noResults.style.display = 'none';
-            
-            // Clear existing members
             membersGrid.innerHTML = '';
-            
-            // Create member cards
             members.forEach(([uid, member]) => {
                 const memberCard = document.createElement('div');
                 memberCard.className = 'member-card animate__animated animate__fadeIn';
                 memberCard.style.animationDelay = `${Math.random() * 0.3}s`;
-                
-                // Determine if image should be blurred
                 const blurClass = member.gender === 'Female' ? 'blur-image' : '';
                 
                 memberCard.innerHTML = `
@@ -1400,13 +1247,10 @@
                     </div>
                 `;
                 
-                // Add click event to show details
                 memberCard.addEventListener('click', () => showMemberDetails(uid, member));
                 membersGrid.appendChild(memberCard);
             });
         }
-
-        // Show member details
         function showMemberDetails(uid, member) {
             const modalProfileImage = document.getElementById('modalProfileImage');
             const modalName = document.getElementById('modalName');
@@ -1417,44 +1261,30 @@
             const modalQualified = document.getElementById('modalQualified');
             const modalCategories = document.getElementById('modalCategories');
             const modalFacebook = document.getElementById('modalFacebook');
-
-            // Set image and blur if female
             modalProfileImage.src = member.profilePicture || 'https://i.postimg.cc/sxQ8JrRs/avatar-profile-picture-icon-logo-design-vector-28836260.jpg';
             if (member.gender === 'Female') {
                 modalProfileImage.classList.add('blur-image');
             } else {
                 modalProfileImage.classList.remove('blur-image');
             }
-
-            // Set other details
             modalName.textContent = member.username || 'Unknown';
             modalGenderBadge.textContent = member.gender || 'N/A';
             modalBloodBadge.textContent = member.bloodGroup || 'N/A';
             modalUniversity.textContent = member.currentUniversity || 'Not specified';
             modalSubject.textContent = member.subject || 'Not specified';
-            
-            // Qualified universities
             modalQualified.textContent = member.qualifiedUniversities?.join(', ') || 'Not specified';
-            
-            // Categories
             modalCategories.innerHTML = member.categories?.map(cat => 
                 `<span class="badge bg-primary me-1">${cat}</span>`
             ).join('') || 'None';
-            
-            // Facebook link
             if (member.facebook) {
                 modalFacebook.href = member.facebook;
                 modalFacebook.style.display = 'inline-block';
             } else {
                 modalFacebook.style.display = 'none';
             }
-
-            // Show modal
             const detailsModal = new bootstrap.Modal(document.getElementById('detailsModal'));
             detailsModal.show();
         }
-
-        // Initialize the app
         init();
     </script>
 </body>
