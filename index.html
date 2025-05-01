@@ -533,16 +533,64 @@
         }
 
         /* Bio styles */
-        .bio-text {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-            margin: 1rem 0;
-            padding: 0.5rem;
-            border-left: 2px solid var(--primary);
-            background: rgba(100, 255, 218, 0.05);
-            max-width: 100%;
-            word-wrap: break-word;
-        }
+.bio-text {
+    font-family: 'Scheherazade', serif;
+    font-size: 1rem;
+    color: #c1f5ff;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    padding: 1rem;
+    margin: 1rem auto;
+    max-width: 700px;
+    border: 2px solid rgba(0, 255, 255, 0.2);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+    z-index: 1;
+    animation: pulseGlow 3s infinite alternate;
+}
+
+/* Neon glow animation */
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+        border-color: rgba(0, 255, 255, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 35px rgba(0, 255, 255, 0.4);
+        border-color: rgba(0, 255, 255, 0.5);
+    }
+}
+
+/* Futuristic grid effect (optional visual layer) */
+.bio-text::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    
+    z-index: 0;
+    pointer-events: none;
+    animation: moveGrid 20s linear infinite;
+}
+
+@keyframes moveGrid {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(-40px, -40px);
+    }
+}
+
+/* Ensure text sits above visual effects */
+.bio-text > * {
+    position: relative;
+    z-index: 2;
+}
+
         
         .bio-counter {
             font-size: 0.8rem;
