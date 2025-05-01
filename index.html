@@ -532,24 +532,47 @@
             letter-spacing: 1px;
         }
 
+        /* Bio styles */
+        .bio-text {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin: 1rem 0;
+            padding: 0.5rem;
+            border-left: 2px solid var(--primary);
+            background: rgba(100, 255, 218, 0.05);
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+        
+        .bio-counter {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            text-align: right;
+            margin-top: -0.5rem;
+        }
+        
+        .bio-counter.warning {
+            color: var(--danger);
+        }
+
         @media (max-width: 768px) {
             .members-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .header {
                 padding: 1.5rem 0;
             }
-            
+
             .clg-logo {
                 width: 100px;
                 height: 100px;
             }
-            
+
             .display-4 {
                 font-size: 2rem;
             }
-            
+
             .search-filter-section {
                 padding: 1rem;
             }
@@ -661,7 +684,7 @@
             </div>
           <hr>  
         <div class="members-grid" id="membersGrid"></div>
-        
+
         <!-- No Results Message -->
         <div class="text-center py-5" id="noResults" style="display: none;">
             <i class="fas fa-user-slash" style="font-size: 3rem; color: var(--text-gray); margin-bottom: 1rem;"></i>
@@ -680,13 +703,13 @@
                     <div class="profile-image-upload mb-4" style="width: 220px; height: 220px; margin: 0 auto;border-radius:10%; cursor: default;">
                         <img id="modalProfileImage" src="" alt="Profile" style="border: none;">
                     </div>
-                    
+
                     <h3 id="modalName" style="color: var(--primary); margin-bottom: 0.5rem;"></h3>
                     <div class="d-flex justify-content-center gap-2 mb-3">
                         <span class="badge bg-primary" id="modalGenderBadge"></span>
                        <i class="fas fa-tint"></i> <span class="badge bg-danger" id="modalBloodBadge"></span>
                     </div>
-                    
+
                     <div class="member-details">
                         <div class="detail-item">
                             <i class="fas fa-graduation-cap"></i>
@@ -701,9 +724,11 @@
                            <span id="modalQualified"></span>
                         </div>
                     </div>
+
+                    <div class="bio-text" id="modalBio"></div>
                     
                     <div class="categories mt-3" id="modalCategories"></div>
-                    
+
                     <div class="social-links mt-4">
                         <a id="modalFacebook" href="#" target="_blank" class="btn btn-outline-primary btn-sm">
                             <i class="fab fa-facebook-f"></i> Facebook
@@ -727,34 +752,36 @@
                     <form id="profileForm">
                         <div class="text-center mb-4">
                             <div class="profile-image-upload" onclick="document.getElementById('profileImageInput').click()">
-                                <img id="profileImagePreview" src="https://i.postimg.cc/sxQ8JrRs/avatar-profile-picture-icon-logo-design-vector-28836260.jpg" alt="Profile Preview">
+                                <img id="profileImagePreview" src="https://i.postimg.cc/L5sqVms4/20250501-140811.jpg" alt="Profile Preview">
                                 <div class="upload-icon">
                                     <i class="fas fa-camera"></i>
                                 </div>
                                 <input type="file" id="profileImageInput" accept="image/*" style="display: none;">
                             </div>
-                            <small class="text" style="color: var(--text-gray);">Click to upload profile picture</small>
+                            <small class="text" style="color: var(--text-gray);">Click to upload profile picture. <i style="font-size:0.9rem"> (Girl's image will auto-blur.) </i> </small>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="profileName"><i class="fas fa-user"></i> Full Name</label>
                                 <input class="form-control" id="profileName" type="text" required>
                             </div>
-                            
+
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="profileGender"><i class="fas fa-venus-mars"></i> Gender</label>
                                 <select class="form-select" id="profileGender" required>
+                                   <option value="">--Select Gender--</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="profileBloodGroup"><i class="fas fa-tint"></i> Blood Group</label>
                                 <select class="form-select" id="profileBloodGroup" required>
+                                   <option value="">--Select Blood Group--</option>
                                     <option value="A+">A+</option>
                                     <option value="A-">A-</option>
                                     <option value="B+">B+</option>
@@ -765,23 +792,23 @@
                                     <option value="O-">O-</option>
                                 </select>
                             </div>
-                            
+
                             <div class="col-md-6 mb-3">
-                                <label class="form-label" for="profileCurrentUniversity"><i class="fas fa-graduation-cap"></i> Current University Name [Capital Letters and Full Forms]</label>
+                                <label class="form-label" for="profileCurrentUniversity"><i class="fas fa-graduation-cap"></i> Current University Name [Full Forms]</label>
                                 <input class="form-control" id="profileCurrentUniversity" type="text" required>
                             </div>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label class="form-label" for="profileSubject"><i class="fas fa-book"></i> Subject/Department</label>
                             <input class="form-control" id="profileSubject" type="text" required>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label class="form-label" for="profileQualifiedUniversities"><i class="fas fa-university"></i> List of Qualified Universities (Comma Separated) [Capital Letters and Short Forms]</label>
                             <input class="form-control" id="profileQualifiedUniversities" type="text" placeholder="BUET, DU, CUET" required>
                         </div>
-
+                        
                         <div class="mb-4">
                             <label class="form-label"><i class="fas fa-tags"></i> Categories</label>
                             <div class="row">
@@ -805,12 +832,16 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="mb-3">
+                            <label class="form-label" for="profileBio"><i class="fas fa-pen"></i> Bio (max 217 characters)</label>
+                            <textarea class="form-control" id="profileBio" maxlength="217" rows="6" placeholder="Tell us something about yourself"></textarea>
+                            <div class="bio-counter" id="bioCounter">0/217</div>
+                        </div>
                         <div class="mb-3">
                             <label class="form-label" for="profileFacebook"><i class="fab fa-facebook"></i> Facebook Profile URL (optional)</label>
                             <input class="form-control" id="profileFacebook" type="url" placeholder="https://facebook.com/username">
                         </div>
-                        
+
                         <button class="btn btn-primary w-100 py-2" type="submit" id="profileSubmitBtn">
                             <i class="fas fa-save"></i> Save Profile
                         </button>
@@ -870,12 +901,25 @@
         const profileSubmitBtn = document.getElementById('profileSubmitBtn');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const particlesContainer = document.getElementById('particles');
+        const profileBio = document.getElementById('profileBio');
+        const bioCounter = document.getElementById('bioCounter');
+        
         function init() {
             createParticles();
             setupEventListeners();
             setupAuthStateListener();
             loadMembers();
+            
+            // Bio character counter
+            profileBio.addEventListener('input', updateBioCounter);
         }
+        
+        function updateBioCounter() {
+            const currentLength = profileBio.value.length;
+            bioCounter.textContent = `${currentLength}/217`;
+            bioCounter.classList.toggle('warning', currentLength > 215);
+        }
+        
         function createParticles() {
             const particleCount = 30;
             for (let i = 0; i < particleCount; i++) {
@@ -889,17 +933,21 @@
                 const duration = Math.random() * 20 + 10;
                 const delay = Math.random() * 5;
                 particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
-                
+
                 particlesContainer.appendChild(particle);
             }
         }
+
         function setupEventListeners() {
             // Auth button
             authButton.addEventListener('click', handleAuthClick);
-            searchInput.addEventListener('input', _.debounce(() => {
-                searchQuery = searchInput.value.toLowerCase();
+            
+            // Search input with debounce
+            searchInput.addEventListener('input', _.debounce((e) => {
+                searchQuery = e.target.value.trim().toLowerCase();
                 filterAndRenderMembers();
             }, 300));
+            
             filterButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     activeFilter = btn.dataset.filter;
@@ -907,6 +955,7 @@
                     filterAndRenderMembers();
                 });
             });
+            
             bloodFilters.forEach(btn => {
                 btn.addEventListener('click', () => {
                     if (activeBloodFilter === btn.dataset.blood) {
@@ -918,20 +967,11 @@
                     filterAndRenderMembers();
                 });
             });
-            uniFilters.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (activeUniFilter === btn.dataset.uni) {
-                        activeUniFilter = null;
-                    } else {
-                        activeUniFilter = btn.dataset.uni;
-                    }
-                    updateActiveFilters();
-                    filterAndRenderMembers();
-                });
-            });
+            
             profileImageInput.addEventListener('change', previewProfileImage);
             profileForm.addEventListener('submit', saveProfile);
         }
+
         function updateActiveFilters() {
             filterButtons.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.filter === activeFilter);
@@ -939,10 +979,79 @@
             bloodFilters.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.blood === activeBloodFilter);
             });
-            uniFilters.forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.uni === activeUniFilter);
+        }
+
+        function filterAndRenderMembers() {
+            if (!allMembers) return;
+            
+            const filteredMembers = Object.entries(allMembers)
+                .filter(([uid, member]) => {
+                    // Filter by category
+                    const categoryMatch = activeFilter === "All" || 
+                                         (member.categories && member.categories.includes(activeFilter));
+
+                    // Filter by blood group
+                    const bloodMatch = !activeBloodFilter || 
+                                     (member.bloodGroup && member.bloodGroup === activeBloodFilter);
+
+                    // Search across multiple fields
+                    let searchMatch = true;
+                    if (searchQuery) {
+                        searchMatch = (
+                            (member.username && member.username.toLowerCase().includes(searchQuery)) || 
+                            (member.currentUniversity && member.currentUniversity.toLowerCase().includes(searchQuery)) || 
+                            (member.subject && member.subject.toLowerCase().includes(searchQuery)) ||
+                            (member.bloodGroup && member.bloodGroup.toLowerCase().includes(searchQuery)) || 
+                            (member.qualifiedUniversities && 
+                             member.qualifiedUniversities.some(u => u.toLowerCase().includes(searchQuery))) ||
+                            (member.bio && member.bio.toLowerCase().includes(searchQuery))
+                        );
+                    }
+
+                    return categoryMatch && bloodMatch && searchMatch;
+                })
+                .sort((a, b) => b[1].timestamp - a[1].timestamp); // Sort by newest first
+
+            renderMembers(filteredMembers);
+        }
+
+        function renderMembers(members) {
+            if (members.length === 0) {
+                membersGrid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            membersGrid.style.display = 'grid';
+            noResults.style.display = 'none';
+            membersGrid.innerHTML = '';
+            
+            members.forEach(([uid, member]) => {
+                const memberCard = document.createElement('div');
+                memberCard.className = 'member-card animate__animated animate__fadeIn';
+                memberCard.style.animationDelay = `${Math.random() * 0.3}s`;
+                const blurClass = member.gender === 'Female' ? 'blur-image' : '';
+
+                memberCard.innerHTML = `
+                    <div class="card-body">
+                        ${member.bloodGroup ? `<div class="blood-group"><i class="fas fa-tint"></i>  ${member.bloodGroup} </div>` : ''}
+                        <img src="${member.profilePicture || 'https://i.postimg.cc/L5sqVms4/20250501-140811.jpg'}" 
+                             alt="${member.username}'s profile" 
+                             class="${blurClass}">
+                        <h5 class="card-title">${member.username || 'Unknown'}</h5>
+                        <p class="card-text"><i class="fas fa-graduation-cap"></i> ${member.currentUniversity || 'Not specified'}</p>
+                        <p class="card-text"><i class="fas fa-book"></i> ${member.subject || 'Not specified'}</p>
+                        <div class="mt-2">
+                            ${member.categories?.map(cat => `<span class="badge bg-primary">${cat}</span>`).join(' ') || ''}
+                        </div>
+                    </div>
+                `;
+
+                memberCard.addEventListener('click', () => showMemberDetails(uid, member));
+                membersGrid.appendChild(memberCard);
             });
         }
+
         function handleAuthClick() {
             if (currentUser) {
                 showProfileModal();
@@ -950,6 +1059,7 @@
                 signInWithGoogle();
             }
         }
+
         async function signInWithGoogle() {
             const provider = new GoogleAuthProvider();
             try {
@@ -959,16 +1069,18 @@
                 alert("Sign-in failed. Please try again.");
             }
         }
+
         function setupAuthStateListener() {
             onAuthStateChanged(auth, (user) => {
                 currentUser = user;
                 updateAuthButton();
-                
+
                 if (user) {
                     checkUserProfile();
                 }
             });
         }
+
         function updateAuthButton() {
             if (currentUser) {
                 authButton.innerHTML = '<i class="fas fa-user"></i> My Profile';
@@ -976,15 +1088,16 @@
                 authButton.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
             }
         }
+
         function checkUserProfile() {
             const userRef = ref(database, `members/${currentUser.uid}`);
             onValue(userRef, (snapshot) => {
                 if (!snapshot.exists()) {
-                    // New user, show profile creation modal
                     showProfileModal();
                 }
             }, { onlyOnce: true });
         }
+
         function showProfileModal() {
             if (!currentUser) {
                 alert("Please sign in to create or edit your profile.");
@@ -993,8 +1106,9 @@
 
             const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
             profileForm.reset();
-            profileImagePreview.src = "https://i.postimg.cc/sxQ8JrRs/avatar-profile-picture-icon-logo-design-vector-28836260.jpg";
+            profileImagePreview.src = "https://i.postimg.cc/L5sqVms4/20250501-140811.jpg";
             profileImageFile = null;
+            
             const userRef = ref(database, `members/${currentUser.uid}`);
             onValue(userRef, (snapshot) => {
                 const data = snapshot.val();
@@ -1006,13 +1120,15 @@
                     document.getElementById('profileSubject').value = data.subject || '';
                     document.getElementById('profileFacebook').value = data.facebook || '';
                     document.getElementById('profileQualifiedUniversities').value = data.qualifiedUniversities?.join(', ') || '';
-                    
+                    document.getElementById('profileBio').value = data.bio || '';
+                    updateBioCounter();
+
                     if (data.categories) {
                         document.getElementById('categoryEngineering').checked = data.categories.includes('Engineering');
                         document.getElementById('categoryMedical').checked = data.categories.includes('Medical');
                         document.getElementById('categoryUniversity').checked = data.categories.includes('University');
                     }
-                    
+
                     if (data.profilePicture) {
                         profileImagePreview.src = data.profilePicture;
                         if (data.gender === 'Female') {
@@ -1028,6 +1144,7 @@
 
             profileModal.show();
         }
+
         function previewProfileImage() {
             const file = profileImageInput.files[0];
             if (file) {
@@ -1045,6 +1162,7 @@
                 reader.readAsDataURL(file);
             }
         }
+
         async function uploadProfileImage(file, gender) {
             const formData = new FormData();
             formData.append("file", file);
@@ -1075,9 +1193,10 @@
                 throw new Error("Failed to upload image. Please try again.");
             }
         }
+
         async function saveProfile(e) {
             e.preventDefault();
-            
+
             if (!currentUser) {
                 alert("Please sign in to save your profile.");
                 return;
@@ -1093,11 +1212,12 @@
                 const currentUniversity = document.getElementById('profileCurrentUniversity').value.trim();
                 const subject = document.getElementById('profileSubject').value.trim();
                 const facebook = document.getElementById('profileFacebook').value.trim();
+                const bio = document.getElementById('profileBio').value.trim();
                 const qualifiedUniversities = document.getElementById('profileQualifiedUniversities').value
                     .split(',')
                     .map(u => u.trim())
                     .filter(u => u.length > 0);
-                
+
                 const categories = [];
                 if (document.getElementById('categoryEngineering').checked) categories.push('Engineering');
                 if (document.getElementById('categoryMedical').checked) categories.push('Medical');
@@ -1114,7 +1234,6 @@
                 if (profileImageFile) {
                     profilePictureUrl = await uploadProfileImage(profileImageFile, gender);
                 } else {
-                    // Use existing image if available
                     const existingProfile = profileImagePreview.src;
                     if (existingProfile && !existingProfile.includes('.placeholder.com')) {
                         profilePictureUrl = existingProfile;
@@ -1135,6 +1254,11 @@
                     timestamp: Date.now(),
                     lastUpdated: Date.now()
                 };
+                
+                if (bio) {
+                    profileData.bio = bio;
+                }
+                
                 if (facebook) {
                     if (!facebook.startsWith('https://www.facebook.com/') && 
                         !facebook.startsWith('https://facebook.com/')) {
@@ -1154,6 +1278,7 @@
                 profileSubmitBtn.innerHTML = '<i class="fas fa-save"></i> Save Profile';
             }
         }
+
         function showToast(message, type = 'success') {
             const toast = document.createElement('div');
             toast.className = `toast-notification ${type}`;
@@ -1174,6 +1299,7 @@
                 setTimeout(() => toast.remove(), 300);
             });
         }
+
         function loadMembers() {
             onValue(membersRef, (snapshot) => {
                 allMembers = snapshot.val() || {};
@@ -1193,78 +1319,21 @@
                 }, 500);
             });
         }
+
         function updateMemberCounts() {
             const members = Object.values(allMembers);
             memberCount.textContent = members.length;
-            
+
             const engineering = members.filter(m => m.categories?.includes('Engineering')).length;
             const medical = members.filter(m => m.categories?.includes('Medical')).length;
             const university = members.filter(m => m.categories?.includes('University')).length;
-            
+
             allCount.textContent = `(${members.length})`;
             engineeringCount.textContent = `(${engineering})`;
             medicalCount.textContent = `(${medical})`;
             universityCount.textContent = `(${university})`;
         }
-        function filterAndRenderMembers() {
-            const filteredMembers = Object.entries(allMembers)
-                .filter(([uid, member]) => {
-                    const categoryMatch = activeFilter === "All" || 
-                                         (member.categories && member.categories.includes(activeFilter));
 
-                    const bloodMatch = !activeBloodFilter || 
-                                      member.bloodGroup === activeBloodFilter;
-                    
-                    const uniMatch = !activeUniFilter || 
-                                    (member.currentUniversity && member.currentUniversity.includes(activeUniFilter));
-                    
-                    const searchMatch = !searchQuery || 
-                                      (member.username && member.username.toLowerCase().includes(searchQuery)) || 
-                                      (member.currentUniversity && member.currentUniversity.toLowerCase().includes(searchQuery)) || 
-                                      (member.bloodGroup && member.bloodGroup.toLowerCase().includes(searchQuery)) || 
-                                      (member.qualifiedUniversities && member.qualifiedUniversities.some(u => u.toLowerCase().includes(searchQuery)));
-                    
-                    return categoryMatch && bloodMatch && uniMatch && searchMatch;
-                })
-                .sort((a, b) => b[1].timestamp - a[1].timestamp); // Sort by newest first
-
-            renderMembers(filteredMembers);
-        }
-        function renderMembers(members) {
-            if (members.length === 0) {
-                membersGrid.style.display = 'none';
-                noResults.style.display = 'block';
-                return;
-            }
-            
-            membersGrid.style.display = 'grid';
-            noResults.style.display = 'none';
-            membersGrid.innerHTML = '';
-            members.forEach(([uid, member]) => {
-                const memberCard = document.createElement('div');
-                memberCard.className = 'member-card animate__animated animate__fadeIn';
-                memberCard.style.animationDelay = `${Math.random() * 0.3}s`;
-                const blurClass = member.gender === 'Female' ? 'blur-image' : '';
-                
-                memberCard.innerHTML = `
-                    <div class="card-body">
-                        ${member.bloodGroup ? `<div class="blood-group"><i class="fas fa-tint"></i>  ${member.bloodGroup} </div>` : ''}
-                        <img src="${member.profilePicture || 'https://i.postimg.cc/sxQ8JrRs/avatar-profile-picture-icon-logo-design-vector-28836260.jpg'}" 
-                             alt="${member.username}'s profile" 
-                             class="${blurClass}">
-                        <h5 class="card-title">${member.username || 'Unknown'}</h5>
-                        <p class="card-text"><i class="fas fa-graduation-cap"></i> ${member.currentUniversity || 'Not specified'}</p>
-                        <p class="card-text"><i class="fas fa-book"></i> ${member.subject || 'Not specified'}</p>
-                        <div class="mt-2">
-                            ${member.categories?.map(cat => `<span class="badge bg-primary">${cat}</span>`).join(' ') || ''}
-                        </div>
-                    </div>
-                `;
-                
-                memberCard.addEventListener('click', () => showMemberDetails(uid, member));
-                membersGrid.appendChild(memberCard);
-            });
-        }
         function showMemberDetails(uid, member) {
             const modalProfileImage = document.getElementById('modalProfileImage');
             const modalName = document.getElementById('modalName');
@@ -1275,7 +1344,9 @@
             const modalQualified = document.getElementById('modalQualified');
             const modalCategories = document.getElementById('modalCategories');
             const modalFacebook = document.getElementById('modalFacebook');
-            modalProfileImage.src = member.profilePicture || 'https://i.postimg.cc/sxQ8JrRs/avatar-profile-picture-icon-logo-design-vector-28836260.jpg';
+            const modalBio = document.getElementById('modalBio');
+            
+            modalProfileImage.src = member.profilePicture || 'https://i.postimg.cc/L5sqVms4/20250501-140811.jpg';
             if (member.gender === 'Female') {
                 modalProfileImage.classList.add('blur-image');
             } else {
@@ -1287,6 +1358,7 @@
             modalUniversity.textContent = member.currentUniversity || 'Not specified';
             modalSubject.textContent = member.subject || 'Not specified';
             modalQualified.textContent = member.qualifiedUniversities?.join(', ') || 'Not specified';
+            modalBio.textContent = member.bio || '';
             modalCategories.innerHTML = member.categories?.map(cat => 
                 `<span class="badge bg-primary me-1">${cat}</span>`
             ).join('') || 'None';
@@ -1299,6 +1371,7 @@
             const detailsModal = new bootstrap.Modal(document.getElementById('detailsModal'));
             detailsModal.show();
         }
+
         init();
     </script>
 </body>
