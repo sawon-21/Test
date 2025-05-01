@@ -183,7 +183,19 @@
             font-size: 1rem;
             pointer-events: none;
         }
-
+        #bld {
+            background: red;
+            color: var(--primary);
+            border: none;
+            padding: 0.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
         .quick-filter-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -435,7 +447,9 @@
             box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.2);
             color: var(--text-light);
         }
-
+        .form-check-label{
+            font-size: 0.5rem;
+        }
         .form-label {
             color: var(--primary);
             font-weight: 500;
@@ -634,8 +648,8 @@
                     <i class="fas fa-university"></i> University <span id="universityCount">(0)</span>
                 </button>
             </div>
-            <div class="quick-filter-buttons mt-2">
-                <span class="text" style="color: red; font-weight: 600;font-size: 0.9rem; margin-right: 0.5rem;"><i class="fas fa-tint"></i> Blood Group:</span>
+            <div class="quick-filter-buttons mt-2" id="bld">
+                <span class="text" style="color: white; font-weight: 600;font-size: 0.9rem; margin-right: 0.5rem;"><i class="fas fa-tint" style="color: white;"></i> Blood Group:</span>
                 <button class="quick-filter-btn blood-filter" data-blood="A+">A+</button>
                 <button class="quick-filter-btn blood-filter" data-blood="A-">A-</button>
                 <button class="quick-filter-btn blood-filter" data-blood="B+">B+</button>
@@ -659,7 +673,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Member Details</h5>
+                    <h5 class="modal-title">Details: </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
